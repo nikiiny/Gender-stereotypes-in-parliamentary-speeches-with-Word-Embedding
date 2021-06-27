@@ -1,0 +1,7 @@
+*.pickle
+*.db
+*.DS_Store
+*.ipynb_checkpoints
+
+# folders containing files too large
+/we_models
