@@ -25,7 +25,6 @@ def return_min_length(list1, list2):
         return list1, list2
 
 
-
 def drop_missing_keys(model, keys):
     """Returns list of words actually contained in the model."""
     return [key for key in keys if key in model.index_to_key]
