@@ -16,7 +16,7 @@ def ECT(model,
 
     """Performs Embedding Coherence Test.
     References 'Attenuating Bias in Word Vectors' by S.dev and J.M.Phillips 
-    https://arxiv.org/abs/1901.07656.
+    https://arxiv.org/abs/1901.07656
     
     The algorithm takes as input two groups of gendered pairs of words and
     a group of neutral words. A representative vector for each gender is created
