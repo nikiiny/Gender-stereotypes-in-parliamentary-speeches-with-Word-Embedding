@@ -5,3 +5,4 @@ numba
 sklearn
 fastdist
 tqdm
+mlxtend
