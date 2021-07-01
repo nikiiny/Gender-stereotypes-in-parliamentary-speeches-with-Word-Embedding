@@ -10,8 +10,12 @@ from six import string_types
 from gensim.models import KeyedVectors
 from gensim.models import Word2Vec
 
+from .data import gendered_neutral_words
+
 
 def return_min_length(list1, list2):
+    """If the input lists have different lenghts, discard the last
+    elements of the longer list to obtain lists with the same length."""
 
     if len(list1) != len(list2):
         min_len = min(len(list1), len(list2))
@@ -23,6 +27,7 @@ def return_min_length(list1, list2):
 
 
 def drop_missing_keys(model, keys):
+    """Returns list of words actually contained in the model."""
     return [key for key in keys if key in model.index_to_key]
 
 
@@ -52,6 +57,8 @@ def normalize(v):
 
 
 def calculate_avg_vector(model, list_of_words):
+        """Calculate a new vector as the average of the vectors given
+        as input."""
         vec = []
         for word in list_of_words:
             try:
@@ -62,8 +69,9 @@ def calculate_avg_vector(model, list_of_words):
     
     
 def get_avg_seed_vector(model):
-    female_similar = calculate_avg_vector(model, gendered_neutral_words['donna_words'])
-    male_similar = calculate_avg_vector(model, gendered_neutral_words['uomo_words'])
+    """get seed when using averaged vectors"""
+    female_similar = calculate_avg_vector(model, gendered_neutral_words['female'])
+    male_similar = calculate_avg_vector(model, gendered_neutral_words['male'])
     
     seed_vector = normalize(female_similar - male_similar)
     return seed_vector
@@ -71,14 +79,17 @@ def get_avg_seed_vector(model):
 
 @jit(nopython=True)
 def fast_euclidean_dist(M):
+    """Fast implementation with numba of Matrix pairwise euclidian distance."""
     return fastdist.matrix_pairwise_distance(M, fastdist.euclidean, "euclidean", return_matrix=True)
+
 
 
 @jit(nopython=True)
 def fast_cosine_sim(u,v):
-    v_norm = np.linalg.norm(v)
+    """Fast implementation with numba of cosine similarity with normalization."""
     u_norm = np.linalg.norm(u)
-    similarity = v @ u / (v_norm * u_norm)
+    v_norm = np.linalg.norm(v)
+    similarity = u @ v / (u_norm * v_norm)
     return similarity
 
 
@@ -90,10 +101,26 @@ def get_seed_vector(seed, model):
     return seed_vector, positive_end, negative_end
 
 
-def print_similar_to_avg_gender(model,gender):
-    avg_vector = calculate_avg_vector(model, gendered_neutral_words[gender])
-    most_similar = model.similar_by_vector(avg_vector, topn=20)
 
+
+def similar_to_avg_vector(model, words_list, topn=20, verbose=True):
+    """
+    Returns the most similar words to a vector created by averaging a group
+    of words.
+    print plots?
+    """   
+    avg_vector = calculate_avg_vector(model, words_list)
+    most_similar = model.similar_by_vector(avg_vector, topn=20+len(words_list))
+
+    most_similar_return = []
     for word in most_similar:
-        if word[0] not in gendered_neutral_words[gender]:
-            print(word)    
+        if word[0] not in words_list:
+            most_similar_return.append(word)
+
+    if verbose:
+        display(most_similar_return[:topn])
+
+    return most_similar_return[:topn]
+
+
+

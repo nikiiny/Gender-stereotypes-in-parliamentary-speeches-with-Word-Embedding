@@ -1,6 +1,10 @@
 """
 From responsibly package https://github.com/ResponsiblyAI/responsibly/blob/master/responsibly/we/weat.py
-This implementation works with gensim >= 4.0
+Added functionalities:
+- Works with gensim >= 4.0
+- Doesn't raise error when a word is missing from the dictionary, just ignore it. Since the 
+  algorithm requires the 2 neutral words groups to have the same length, if some words are 
+  missing from one group it discards the last words of the other groups, so that the 2 lenghts match.
 """
 
 from .utils import cosine_similarities_by_words, drop_missing_keys, return_min_length
@@ -32,7 +36,7 @@ def calc_single_weat(model,
                      with_pvalue=True, pvalue_kwargs=None):
     """
     Calc the WEAT result of a word embedding.
-    :param model: Word embedding model of ``gensim.model.KeyedVectors``
+    :param model: Word embedding model of 'gensim.model.KeyedVectors'
     :param dict first_target: First target words list and its name
     :param dict second_target: Second target words list and its name
     :param dict first_attribute: First attribute words list and its name
@@ -105,7 +109,10 @@ def _calc_weat_pvalue(first_associations, second_associations,
 def _calc_weat_associations(model,
                             first_target_words, second_target_words,
                             first_attribute_words, second_attribute_words):
-
+    
+    # Since the algorithm requires the 2 neutral words groups to have the same length, if 
+    #some words are missing from one group it discards the last words of the other groups, 
+    #so that the 2 lenghts match. 
     first_target_words, second_target_words = return_min_length(first_target_words, second_target_words)
     first_attribute_words, second_attribute_words = return_min_length(first_attribute_words, second_attribute_words)
 

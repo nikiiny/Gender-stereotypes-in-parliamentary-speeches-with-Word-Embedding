@@ -1,6 +1,6 @@
 {"female":["donna","ella","femmina"],
  "male":["uomo","lui","egli","maschio"],
-"adj_appearance": ["rozzo", "sensuale", "splendido", "magro", "piacevole", "brutto", "bello", "grasso", 
+"adj_appearence": ["rozzo", "sensuale", "splendido", "magro", "piacevole", "brutto", "bello", "grasso", 
                    "attraente", "carino", "frivolo", "aggraziato"], 
  "adj_positive": ["intraprendente", "astuto", "intelligente", "riflessivo", "coraggioso", "giudizioso", 
                   "analitico", "premuroso", "furbo", "brillante", "razionale", "saggio", "appropriato", 
