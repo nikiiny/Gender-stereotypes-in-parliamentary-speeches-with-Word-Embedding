@@ -18,6 +18,7 @@ from gensim import utils, matutils
 from gensim.models import KeyedVectors
 from gensim.models import Word2Vec
 from numbers import Integral
+from six import string_types
 from numpy import (
     dot, float32 as REAL, double, array, zeros, vstack,
     ndarray, sum as np_sum, prod, argmax, dtype, ascontiguousarray, frombuffer,
@@ -25,7 +26,6 @@ from numpy import (
 
 from .utils import normalize, calculate_avg_vector, get_seed_vector, get_avg_seed_vector
 from .utils import fast_euclidean_dist, fast_cosine_sim
-from six import string_types
 from .data import gendered_neutral_words
 
 

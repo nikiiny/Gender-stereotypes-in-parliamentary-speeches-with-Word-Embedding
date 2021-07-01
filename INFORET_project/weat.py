@@ -7,14 +7,14 @@ Added functionalities:
   missing from one group it discards the last words of the other groups, so that the 2 lenghts match.
 """
 
-from .utils import cosine_similarities_by_words, drop_missing_keys, return_min_length
 import copy
 import random
 import warnings
-
 import numpy as np
 import pandas as pd
 from mlxtend.evaluate import permutation_test
+
+from .utils import cosine_similarities_by_words, drop_missing_keys, return_min_length
 
 
 FILTER_BY_OPTIONS = ['model', 'data']
