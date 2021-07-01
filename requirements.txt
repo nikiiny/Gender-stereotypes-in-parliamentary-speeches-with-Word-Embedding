@@ -1,5 +1,6 @@
-gensim==3.7.3
+gensim>=4.0
 numpy
 pandas
-responsibly
-seaborn
+numba
+sklearn
+fastdist
