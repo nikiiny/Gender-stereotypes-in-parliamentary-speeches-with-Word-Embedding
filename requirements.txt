@@ -6,3 +6,4 @@ sklearn
 fastdist
 tqdm
 mlxtend
+pymongo

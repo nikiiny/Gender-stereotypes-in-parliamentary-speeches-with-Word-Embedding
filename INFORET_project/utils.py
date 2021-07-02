@@ -13,6 +13,17 @@ from gensim.models import Word2Vec
 from .data import gendered_neutral_words
 
 
+YEARS = ['1948_1968', '1968_1985', '1985_2000', '2000_2020']
+
+
+def load_embed_model(years):
+    if not years in YEARS:
+        raise ValueError( "Argument 'years' has an incorrect value: use one among {}".format(YEARS))
+        
+    return KeyedVectors.load(f'we_models/W2V_by_years_{years}')
+
+
+
 def return_min_length(list1, list2):
     """If the input lists have different lenghts, discard the last
     elements of the longer list to obtain lists with the same length."""
