@@ -6,6 +6,7 @@ from gensim.models import Word2Vec
 from collections import defaultdict
 
 from .utils import calculate_avg_vector, fast_cosine_sim
+from .utils import plot_barplot_sim, plot_stackbar_difference_sim
 from .data import gendered_neutral_words
 from .analogies_functions import Analogies
 
@@ -218,6 +219,36 @@ class Analogies_Distance_Bias():
                 
         return [*zip(self.sorted_keys,sorted_difference)]
                 
+
+    def plot_bias(self):
+
+        similarity_female_pos = ( [self.dict_analogies[w]['female']['cos_sim_female'] for w in self.sorted_keys] 
+                         + [self.dict_analogies[w]['female']['cos_sim_male'] for w in self.sorted_keys] )
+
+        similarity_male_pos = ( [self.dict_analogies[w]['male']['cos_sim_female'] for w in self.sorted_keys] 
+                         + [self.dict_analogies[w]['male']['cos_sim_male'] for w in self.sorted_keys] )
+
+        data = pd.DataFrame(columns = ['words', 'similarity_female_pos', 'similarity_male_pos', 'ref_gender'])
+        data['words'] = self.sorted_keys*2
+        data['similarity_female_pos'] = similarity_female_pos
+        data['similarity_male_pos'] = similarity_male_pos
+        data['ref_gender'] = ['cos_sim_female']*len(self.sorted_keys) + ['cos_sim_male']*len(self.sorted_keys)
+
+        distance = pd.DataFrame(columns = ['words','distance_female_pos','distance_male_pos'])
+        distance['words'] = self.sorted_keys
+        distance['distance_female_pos'] = abs(
+            np.array(data['similarity_female_pos'][data['ref_gender']=='cos_sim_female'])
+            - np.array(data['similarity_female_pos'][data['ref_gender']=='cos_sim_male']))
+        distance['distance_male_pos'] = abs(
+            np.array(data['similarity_male_pos'][data['ref_gender']=='cos_sim_female'])
+            - np.array(data['similarity_male_pos'][data['ref_gender']=='cos_sim_male']))
+
+
+        plot_barplot_sim(data)
+        plot_stackbar_difference_sim(distance)
+
+
+
     def print_top_analogies(self, topn=5):
         """
         Prints the words retrieved by the analogies for the most biased positive words.

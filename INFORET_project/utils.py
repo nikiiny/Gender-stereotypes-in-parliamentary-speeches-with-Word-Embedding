@@ -9,11 +9,14 @@ import pandas as pd
 from six import string_types
 from gensim.models import KeyedVectors
 from gensim.models import Word2Vec
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from .data import gendered_neutral_words
 
 
 YEARS = ['1948_1968', '1968_1985', '1985_2000', '2000_2020']
+GENDER = ['male','female']
 
 
 def load_embed_model(years):
@@ -133,4 +136,42 @@ def similar_to_avg_vector(model, words_list, topn=20, verbose=True):
     return most_similar_return[:topn]
 
 
+
+def plot_stackbar_difference_sim(data):
+
+    fig, ax = plt.subplots(figsize=(15, 8))
+    ax.bar(x='words', height='distance_female_pos', data=data,
+           label='female as positive', color='#ff4d4d')
+    ax.bar(x='words', height='distance_male_pos', data=data, bottom='distance_female_pos',
+           label='male as positive', color='#5cd65c')
+
+    ax.set_title(f"Difference in average similarities of words returned by analogies to genders",fontsize=40)
+    ax.legend()
+    plt.setp(ax.get_legend().get_texts(), fontsize='25')
+    ax.set_xticklabels(data['words'], fontsize=18, rotation=45, horizontalalignment='right')
+    ax.tick_params(axis="y", labelsize=20)
+
+    plt.show()
+
+
+
+def plot_barplot_sim(data):
+
+    sns.set_theme(style="darkgrid")
+    fig, axes = plt.subplots(1,2, figsize=(30, 8))
+    for i,gender in enumerate(GENDER):
+        sns.barplot(ax=axes[i], y=data[f"similarity_{gender}_pos"], x=data['words'], hue=data['ref_gender']
+                , palette=['#ff80b3', '#4da6ff'])
+
+        plt.suptitle("Similarity of words returned by analogies to male and female", fontsize=40)
+        axes[i].set_title(f"Positive gender: {gender}",fontsize=25)
+        axes[i].set_xlabel('')
+        axes[i].set_ylabel('')
+        axes[i].set_xticklabels(axes[i].get_xticklabels(), fontsize=18,rotation=45, horizontalalignment='right')
+        plt.setp(axes[i].get_legend().get_texts(), fontsize='25')
+        plt.setp(axes[i].get_legend().get_title(),fontsize=25)
+        axes[i].tick_params(axis="y", labelsize=20)
+        axes[i].set_ylim(0,0.6)
+
+    plt.show()
 

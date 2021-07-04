@@ -7,3 +7,5 @@ fastdist
 tqdm
 mlxtend
 pymongo
+seaborn
+matplotlib
