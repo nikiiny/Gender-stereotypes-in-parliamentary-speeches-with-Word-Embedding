@@ -36,22 +36,24 @@ class ECT():
         model: Word embedding model of 'gensim.model.KeyedVectors'.
         female_gender_words (list): list of words related to female gender.
         male_gender_words (list): list of words related to male gender.
-        neutral_words (list): list of neutral words not specifically related to any gender. 
-        verbose (bool): if True, prints correlation and p-value. If returns_words_sim
-            is True prints cosine similarity between each word and each gender.
-            Default: True
-        return_words_sim (bool): if True and verbose True, prints cosine similarity between 
-            each word and each gender.
-            Default: True
-
-        Returns
-        --------------
-        Spearman rank-order correlation and p-value.
         """
 
     def get_bias(self,
         neutral_words, 
         verbose=True):
+
+        """
+        Parameters
+        --------------
+        neutral_words (list): list of neutral words not specifically related to any gender. 
+        verbose (bool): if True, prints correlation and p-value.
+            Default: True
+
+        Returns
+        --------------
+        Spearman rank-order correlation.
+        """
+
         # create mean vector for each gender
         female_avg = calculate_avg_vector(self.model, self.female_gender_words)
         male_avg = calculate_avg_vector(self.model, self.male_gender_words)
@@ -93,8 +95,22 @@ class ECT():
 
 
     def get_cosine_sim_words(self, verbose=True):
+        """
+        Orders the words in the neutral group by the difference in the cosine similarities
+            between the word and the female group and the word and the male group.
 
-        # order the words by the distance of the cosine similarities between female and the word, and male and
+        Parameters
+        --------------
+        verbose (bool): if True, prints neutral words and their cosine similarity to female 
+            and male groups.
+            Default: True
+
+        Returns
+        --------------
+        Sorted list of tuples (neutral word, cosine similarity to female group, cosine similarity to male group)
+        """
+
+        # order the words by the distance of the cosine similarities between female and the word and male and
         #the word 
         cos_sim = [ (word, round(self.cos_sim_female[i],4), round(self.cos_sim_male[i],4)) for i,word in enumerate(self.keys_found)]
         cos_sim = sorted(cos_sim, key= lambda x: abs(x[1]-x[2]), reverse=True)
