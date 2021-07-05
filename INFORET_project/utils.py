@@ -175,3 +175,12 @@ def plot_barplot_sim(data):
 
     plt.show()
 
+
+
+def to_list(x):
+    """Returns a list if the input is a string"""
+    if isinstance(x, str):
+        return [x]
+    else:
+        return x
+

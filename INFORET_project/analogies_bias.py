@@ -13,7 +13,9 @@ from .analogies_functions import Analogies
 
 GENDER = ['male','female']
 ANALOGY_TYPE = ['cosadd', 'cosmul']
-WORDS_GROUP = ['adj_appearence', 'adj_positive', 'adj_negative','family', 'career']
+WORDS_GROUP = ['adj_appearence','family', 'career',
+                'rage', 'kindness', 'intelligence', 'dumbness', 'active', 'passive',
+                'gendered_words', 'female_stereotypes', 'male_stereotypes']
 
 
 class Analogies_Distance_Bias():
@@ -201,7 +203,7 @@ class Analogies_Distance_Bias():
             except:
                 pass
             
-        # sort positive words by the bias of their analogy
+        # sort positive words by the bias of their analogy (sum of total bias)
         self.sorted_keys = sorted(self.dict_analogies.keys(), 
                                  key=lambda x: (self.dict_analogies[x]['female']['difference'] + self.dict_analogies[x]['male']['difference']),
                                  reverse=True)  
@@ -232,16 +234,16 @@ class Analogies_Distance_Bias():
         data['words'] = self.sorted_keys*2
         data['similarity_female_pos'] = similarity_female_pos
         data['similarity_male_pos'] = similarity_male_pos
-        data['ref_gender'] = ['cos_sim_female']*len(self.sorted_keys) + ['cos_sim_male']*len(self.sorted_keys)
+        data['ref_gender'] = ['sim to female']*len(self.sorted_keys) + ['sim to male']*len(self.sorted_keys)
 
         distance = pd.DataFrame(columns = ['words','distance_female_pos','distance_male_pos'])
         distance['words'] = self.sorted_keys
         distance['distance_female_pos'] = abs(
-            np.array(data['similarity_female_pos'][data['ref_gender']=='cos_sim_female'])
-            - np.array(data['similarity_female_pos'][data['ref_gender']=='cos_sim_male']))
+            np.array(data['similarity_female_pos'][data['ref_gender']=='sim to female'])
+            - np.array(data['similarity_female_pos'][data['ref_gender']=='sim to male']))
         distance['distance_male_pos'] = abs(
-            np.array(data['similarity_male_pos'][data['ref_gender']=='cos_sim_female'])
-            - np.array(data['similarity_male_pos'][data['ref_gender']=='cos_sim_male']))
+            np.array(data['similarity_male_pos'][data['ref_gender']=='sim to female'])
+            - np.array(data['similarity_male_pos'][data['ref_gender']=='sim to male']))
 
 
         plot_barplot_sim(data)
@@ -261,5 +263,23 @@ class Analogies_Distance_Bias():
                 print(f"\nWord: {word}\n")
                 for gender in GENDER:
                     print(f"Positive gender: {gender}")
-                    display(self.dict_analogies[word][gender]['analogies'])        
+                    display(self.dict_analogies[word][gender]['analogies']) 
+
+    def get_avg_group_bias(self):
+        """
+        Returns the average bias when the gender female is positive, when the gender male is
+        positive and their sum.
+        """
+
+        if not [self.dict_analogies[word][gender]['difference'] for word in self.dict_analogies.keys() for gender in GENDER]:
+            raise Exception("Empty dictionary, call method 'get_bias' before")
+
+        female_pos = np.array([ self.dict_analogies[word]['female']['difference'] for word in self.sorted_keys ]).mean()
+        male_pos = np.array([ self.dict_analogies[word]['male']['difference'] for word in self.sorted_keys ]).mean()
+
+
+
+        return (np.round(female_pos,4), np.round(male_pos,4), np.round(female_pos+male_pos,4))
+
+
                 

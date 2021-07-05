@@ -14,6 +14,7 @@ Added functionalities:
 import numpy as np
 import pandas as pd
 import gensim
+import warnings
 from gensim import utils, matutils
 from gensim.models import KeyedVectors
 from gensim.models import Word2Vec
@@ -333,7 +334,7 @@ class Analogies():
     
     def generate_analogies(self, n_analogies=100, seed=None, use_avg_gender=False,
                             multiple=False, delta=1., restrict_vocab=10000,
-                            unrestricted=False):
+                            unrestricted=True):
             """
             Generate analogies based on a seed vector.
             x - y ~ seed vector.
