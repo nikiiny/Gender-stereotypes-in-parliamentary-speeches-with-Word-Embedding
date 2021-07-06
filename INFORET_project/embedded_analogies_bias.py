@@ -18,8 +18,9 @@ WORDS_GROUP = ['adj_appearence','family', 'career',
                 'gendered_words', 'female_stereotypes', 'male_stereotypes']
 
 
-class Analogies_Distance_Bias():
+class EAB():
     """
+    EAB stands for Embedded Analogies Bias.
     Measures how biased are words returned by analogies where a gender and a neutral
     word contributes positively and the other gender contributes negatively.
     Example: uomo:? = donna:gentile

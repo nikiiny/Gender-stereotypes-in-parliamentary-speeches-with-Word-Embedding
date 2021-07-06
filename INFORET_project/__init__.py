@@ -1,5 +1,5 @@
 from .analogies_functions import Analogies
-from .analogies_bias import Analogies_Distance_Bias
+from .embedded_analogies_bias import EAB
 from .weat import calc_single_weat as WEAT
 from .ect import ECT
 from .utils import similar_to_avg_vector, calculate_avg_vector, load_embed_model
@@ -13,4 +13,4 @@ PAIRS_WORDS_GROUP = [['family', 'career'],
                 ['female_stereotypes', 'male_stereotypes']]
 
 
-__all__ = ['Analogies', 'Analogies_Distance_Bias','calculate_avg_vector','similar_to_avg_vector', 'WEAT', 'ECT','load_embed_model']
+__all__ = ['Analogies', 'EAB','calculate_avg_vector','similar_to_avg_vector', 'WEAT', 'ECT','load_embed_model']

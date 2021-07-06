@@ -37,9 +37,9 @@ GENDER = ['male','female']
 class Analogies():
     """
     Performs three different types of analogies:
-    - Cosadd: a:? = c:d
+    - 3Cosadd: a:b = c:?
         https://www.aclweb.org/anthology/N13-1090/
-    - Cosmul: a:? = c:d
+    - 3Cosmul: a:b = c:?
         https://www.aclweb.org/anthology/W14-1618/
     - Bolukbasi analogy: a:? = c:?
         https://arxiv.org/abs/1607.06520
