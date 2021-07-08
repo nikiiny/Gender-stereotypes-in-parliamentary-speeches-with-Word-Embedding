@@ -184,3 +184,28 @@ def to_list(x):
     else:
         return x
 
+
+def generate_one_word_forms(word):
+    return [word.lower(), word.upper(), word.title()]
+
+
+def project_reject_vector(v, u):
+    """Projecting and rejecting the vector v onto direction u."""
+    projected_vector = project_vector(v, u)
+    rejected_vector = v - projected_vector
+    return projected_vector, rejected_vector
+
+
+def project_vector(v, u):
+    """Projecting the vector v onto direction u."""
+    normalize_u = normalize(u)
+    return (v @ normalize_u) * normalize_u
+
+
+def reject_vector(v, u):
+    """Rejecting the vector v onto direction u."""
+    return v - project_vector(v, u)
+
+
+def update_word_vector(model, word, new_vector):
+    model.vectors[model.key_to_index[word]] = normalize(new_vector)

@@ -1,5 +1,11 @@
 {"female":["donna","ella","femmina"],
  "male":["uomo","lui","egli","maschio"],
+ "definitional_pairs": [["donna","uomo"], ["lui","ella"], ["egli","ella"], ["femmina","maschio"]],
+ "equality_sets": [["donna","uomo"], ["lui","ella"],["femmina","maschio"], ["marito","moglie"],
+					["ragazza","ragazzo"], ["sorella","fratello"], ["madre","padre"], 
+					["nonno","nonna"], ["femminile","maschile"], ["egli","ella"],
+					["materno","paterno"], ["signor","signora"]],
+ 
 
  "family": ["famiglia", "figlio", "matrimonio", "genitore", "bambino", "accudire"], 
  "career": ["capo", "presidente", "onorevole", "potere", "carriera", "salario",
