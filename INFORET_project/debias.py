@@ -11,7 +11,7 @@ Added functionalities:
 """
 
 import gensim
-from tabulate import tabulate
+from tabulate import tabulate 
 import copy
 import warnings
 import numpy as np

@@ -2,7 +2,7 @@ import numpy as np
 import gensim
 from gensim.models import KeyedVectors
 from gensim.models import Word2Vec
-from scipy.stats import spearmanr
+from scipy.stats import spearmanr 
 
 from .utils import fast_cosine_sim, calculate_avg_vector
 

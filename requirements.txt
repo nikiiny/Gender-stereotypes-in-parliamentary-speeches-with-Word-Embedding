@@ -3,6 +3,7 @@ numpy
 pandas
 numba
 sklearn
+pymongo
 fastdist
 tqdm
 mlxtend
