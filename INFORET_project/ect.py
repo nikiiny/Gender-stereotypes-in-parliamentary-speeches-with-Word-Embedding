@@ -8,16 +8,7 @@ from .utils import fast_cosine_sim, calculate_avg_vector
 
 
 class ECT():
-
-    def __init__(self, model, 
-        female_gender_words, 
-        male_gender_words):
-
-        self.model = model
-        self.female_gender_words = female_gender_words
-        self.male_gender_words = male_gender_words
-
-        """Performs Embedding Coherence Test.
+    """Performs Embedding Coherence Test.
         References 'Attenuating Bias in Word Vectors' by S.dev and J.M.Phillips 
         https://arxiv.org/abs/1901.07656
         
@@ -38,6 +29,16 @@ class ECT():
         male_gender_words (list): list of words related to male gender.
         """
 
+    def __init__(self, 
+        model, 
+        female_gender_words, 
+        male_gender_words):
+
+        self.model = model
+        self.female_gender_words = female_gender_words
+        self.male_gender_words = male_gender_words
+
+        
     def get_bias(self,
         neutral_words, 
         verbose=True):

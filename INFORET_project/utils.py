@@ -20,6 +20,7 @@ GENDER = ['male','female']
 
 
 def load_embed_model(years):
+    """Load word2vec model of corresponding time period"""
     if not years in YEARS:
         raise ValueError( "Argument 'years' has an incorrect value: use one among {}".format(YEARS))
         
@@ -120,7 +121,6 @@ def similar_to_avg_vector(model, words_list, topn=20, verbose=True):
     """
     Returns the most similar words to a vector created by averaging a group
     of words.
-    print plots?
     """   
     avg_vector = calculate_avg_vector(model, words_list)
     most_similar = model.similar_by_vector(avg_vector, topn=20+len(words_list))

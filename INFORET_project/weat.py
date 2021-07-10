@@ -36,14 +36,20 @@ def calc_single_weat(model,
                      with_pvalue=True, pvalue_kwargs=None):
     """
     Calc the WEAT result of a word embedding.
-    :param model: Word embedding model of 'gensim.model.KeyedVectors'
-    :param dict first_target: First target words list and its name
-    :param dict second_target: Second target words list and its name
-    :param dict first_attribute: First attribute words list and its name
-    :param dict second_attribute: Second attribute words list and its name
-    :param bool with_pvalue: Whether to calculate the p-value of the
+
+    Parameters
+    ---------------
+    model: Word embedding model of 'gensim.model.KeyedVectors'
+    first_target (dict): First target words list and its name
+    second_target (dict): Second target words list and its name
+    first_attribute (dict): First attribute words list and its name
+    second_attribute (dict): Second attribute words list and its name
+    with_pvalue (dict): Whether to calculate the p-value of the
                              WEAT score (might be computationally expensive)
-    :return: WEAT result (score, size effect, Nt, Na and p-value)
+
+    Returns
+    ----------------
+    WEAT result (score, size effect, Nt, Na and p-value)
     """
 
     if pvalue_kwargs is None:
