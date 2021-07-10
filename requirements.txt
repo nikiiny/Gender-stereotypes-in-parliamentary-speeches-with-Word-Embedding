@@ -3,11 +3,10 @@ numpy
 pandas
 numba
 sklearn
-pymongo
+tabulate
 fastdist
 tqdm
 mlxtend
-pymongo
 seaborn
 matplotlib
 python-Levenshtein
